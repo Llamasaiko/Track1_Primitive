@@ -36,7 +36,7 @@ class Hotel_Entity(models.Model):
     Hotel_Name = models.CharField(max_length=100,blank=True,null=True)
     Hotel_Address = models.CharField(max_length=200,blank=True,null=True)
     lat = models.DecimalField(max_digits=10,decimal_places=7,blank=True,null=True)
-    lng = models.DecimalField(max_digits=10,decimal_places=7,,blank=True,null=True)
+    lng = models.DecimalField(max_digits=10,decimal_places=7,blank=True,null=True)
     Average_Score = models.DecimalField(max_digits=3,decimal_places=1,,blank=True,null=True)
     Total_Number_of_Reviews = models.IntegerField(blank=True,null=True)
     Additional_Number_of_Scoring = models.IntegerField(blank=True,null=True)
