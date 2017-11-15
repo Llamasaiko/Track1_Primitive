@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block javascript %}
+  <script src="{% static 'reviews/js/reviews.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+  <h1 class="page-header">Reviews</h1>
+
+  <p>
+    <button type="button" class="btn btn-primary js-create-review" data-url="{% url 'review_create' %}">
+      <span class="glyphicon glyphicon-plus"></span>
+      New review
+    </button>
+  </p>
+
+  <table class="table" id="review-table">
+    <thead>
+      <tr>
+        <th>rid</th>
+        <th>hid</th>
+        <th>Review_Date</th>
+        <th>Reviewer_Nationality</th>
+        <th>Positive_Review</th>
+        <th>Negative_Review</th>
+        <th>Review_Total_Positive_Word_Counts</th>
+        <th>Review_Total_Negative_Word_Counts</th>
+        <th>Total_Number_of_Reviews_Reviewer_Has_Given</th>
+        <th>Reviewer_Score</th>
+        <th>Tags</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% include 'reviews/includes/partial_review_list.html' %}
+    </tbody>
+  </table>
+
+  <div class="modal fade" id="modal-review">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+      </div>
+    </div>
+  </div>
+{% endblock %}

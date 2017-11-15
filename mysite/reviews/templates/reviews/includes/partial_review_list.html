@@ -1,0 +1,31 @@
+{% for review in reviews|slice:":10" %}
+  <tr>
+    <td>{{ review.rid }}</td>
+    <td>{{ review.hid }}</td>
+    <td>{{ review.Review_Date }}</td>
+    <td>{{ review.Reviewer_Nationality }}</td>
+    <td>{{ review.Positive_Review }}</td>
+    <td>{{ review.Negative_Review }}</td>
+    <td>{{ review.Review_Total_Positive_Word_Counts }}</td>
+    <td>{{ review.Review_Total_Negative_Word_Counts }}</td>
+    <td>{{ review.Total_Number_of_Reviews_Reviewer_Has_Given }}</td>
+    <td>{{ review.Reviewer_Score }}</td>
+    <td>{{ review.Tags }}</td>
+    <td style="width: 150px">
+      <button type="button"
+              class="btn btn-warning btn-sm js-update-review"
+              data-url="{% url 'review_update' review.rid %}">
+        <span class="glyphicon glyphicon-pencil"></span> Edit
+      </button>
+      <button type="button"
+              class="btn btn-danger btn-sm js-delete-review"
+              data-url="{% url 'review_delete' review.rid %}">
+        <span class="glyphicon glyphicon-trash"></span> Delete
+      </button>
+    </td>
+  </tr>
+{% empty %}
+  <tr>
+    <td colspan="8" class="text-center bg-warning">No review</td>
+  </tr>
+{% endfor %}
