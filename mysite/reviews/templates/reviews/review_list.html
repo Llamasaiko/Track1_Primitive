@@ -8,6 +8,15 @@
 
 {% block content %}
   <h1 class="page-header">Reviews</h1>
+  <form name="search_form" method="POST" action="{% url 'search' %}">
+  {% csrf_token %}
+  <div class="form-group">
+    <input name="query" type="text" class="form-control" placeholder="Search for..." aria-label="Search for...">
+    <span class="input-group-btn">
+      <button class="btn btn-primary" type="Submit">Go!</button>
+    </span>
+  </div>
+  </form>
 
   <p>
     <button type="button" class="btn btn-primary js-create-review" data-url="{% url 'review_create' %}">
@@ -19,8 +28,8 @@
   <table class="table" id="review-table">
     <thead>
       <tr>
-        <th>rid</th>
-        <th>hid</th>
+<!--        <th>rid</th>
+        <th>hid</th> -->
         <th>Review_Date</th>
         <th>Reviewer_Nationality</th>
         <th>Positive_Review</th>

@@ -6,6 +6,17 @@ from .models import Review_Entity
 from .forms import ReviewForm
 
 
+def search(request):
+    if request.method == 'POST': # this will be POST now      
+        review_date =  request.POST.get('query') # do some research what it does
+        try:
+            status = Review_Entity.objects.filter(Review_Date__icontains=review_date)
+        except Review_Entity.DoesNotExist:
+            status = None
+        return render(request,'reviews/review_list.html',{'reviews':status})
+    else:
+        return render(request,'reviews/review_list.html',{})
+
 def review_list(request):
     reviews = Review_Entity.objects.all()
     return render(request, 'reviews/review_list.html', {'reviews': reviews})

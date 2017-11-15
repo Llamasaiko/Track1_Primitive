@@ -52,5 +52,8 @@ $(function () {
   // Delete review
   $("#review-table").on("click", ".js-delete-review", loadForm);
   $("#modal-review").on("submit", ".js-review-delete-form", saveForm);
-
+  
+  // Search review
+  $(".js-search-review").click(loadForm);
+  $("#modal_review").on("submit", ".js-review-search-form", saveForm);
 });

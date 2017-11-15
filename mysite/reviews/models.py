@@ -29,5 +29,5 @@ class Review_Entity(models.Model):
     Review_Total_Positive_Word_Counts = models.IntegerField(blank=True, null=True)
     Review_Total_Negative_Word_Counts = models.IntegerField(blank=True, null=True)
     Total_Number_of_Reviews_Reviewer_Has_Given = models.IntegerField(blank=True, null=True)
-    Reviewer_Score = models.DecimalField(max_digits=3,decimal_places=1,blank=True, null=True)
+    Reviewer_Score = models.FloatField(blank=True, null=True)
     Tags = models.TextField(blank=True, null=True)

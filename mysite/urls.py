@@ -9,4 +9,5 @@ urlpatterns = [
     url(r'^reviews/create/$', views.review_create, name='review_create'),
     url(r'^reviews/(?P<pk>\d+)/update/$', views.review_update, name='review_update'),
     url(r'^reviews/(?P<pk>\d+)/delete/$', views.review_delete, name='review_delete'),
+    url(r'^reviews/search/$',views.search, name='search'),
 ]
