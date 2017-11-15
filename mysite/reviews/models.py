@@ -20,9 +20,9 @@ from django.db import models
 #     book_type = models.PositiveSmallIntegerField(choices=BOOK_TYPES, blank=True, null=True)
 
 class Review_Entity(models.Model):
-    rid = models.IntegerField(primary_key=True, blank=False, null=False)
-    hid = models.IntegerField(blank=False, null=True)
- #   hid = models.ForeignKey('Hotel_Entity', on_delete=models.CASCADE, blank=False, null=False)
+    rid = models.IntegerField(primary_key=True, serialize=False, blank=False, null=False)
+#    hid = models.IntegerField(blank=False, null=True)
+    hid = models.ForeignKey('Hotel_Entity', on_delete=models.CASCADE,blank=False,null=True)
     Review_Date = models.CharField(max_length=15)
     Reviewer_Nationality = models.CharField(max_length=50)
     Positive_Review = models.TextField(max_length=2000)
@@ -37,7 +37,7 @@ class Hotel_Entity(models.Model):
     Hotel_Address = models.CharField(max_length=200,blank=True,null=True)
     lat = models.DecimalField(max_digits=10,decimal_places=7,blank=True,null=True)
     lng = models.DecimalField(max_digits=10,decimal_places=7,blank=True,null=True)
-    Average_Score = models.DecimalField(max_digits=3,decimal_places=1,,blank=True,null=True)
+    Average_Score = models.DecimalField(max_digits=3,decimal_places=1,blank=True,null=True)
     Total_Number_of_Reviews = models.IntegerField(blank=True,null=True)
     Additional_Number_of_Scoring = models.IntegerField(blank=True,null=True)
-    hid = models.IntegerField(primary_key=True,Serialized=False)
+    hid = models.IntegerField(primary_key=True,serialize=False)

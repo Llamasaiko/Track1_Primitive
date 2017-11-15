@@ -3,6 +3,7 @@ from django.http import JsonResponse
 from django.template.loader import render_to_string
 
 from .models import Review_Entity
+from .models import Hotel_Entity
 from .forms import ReviewForm
 
 
@@ -10,7 +11,7 @@ def search(request):
     if request.method == 'POST': # this will be POST now      
         review_date =  request.POST.get('query') # do some research what it does
         try:
-            status = Review_Entity.objects.filter(Review_Date__icontains=review_date)
+            status = Review_Entity.objects.filter(hid__Hotel_Name__icontains=review_date)
         except Review_Entity.DoesNotExist:
             status = None
         return render(request,'reviews/review_list.html',{'reviews':status})
