@@ -32,6 +32,8 @@ class Review_Entity(models.Model):
     Total_Number_of_Reviews_Reviewer_Has_Given = models.IntegerField(blank=True, null=True)
     Reviewer_Score = models.DecimalField(max_digits=3,decimal_places=1,blank=True, null=True)
     Tags = models.TextField(blank=True, null=True)
+    def gethotelname(self):
+        return self.hid.Hotel_Name
 class Hotel_Entity(models.Model):
     Hotel_Name = models.CharField(max_length=100,blank=True,null=True)
     Hotel_Address = models.CharField(max_length=200,blank=True,null=True)
@@ -41,3 +43,6 @@ class Hotel_Entity(models.Model):
     Total_Number_of_Reviews = models.IntegerField(blank=True,null=True)
     Additional_Number_of_Scoring = models.IntegerField(blank=True,null=True)
     hid = models.IntegerField(primary_key=True,serialize=False)
+
+    def __unicode__(self):
+        return self.Hotel_Name
