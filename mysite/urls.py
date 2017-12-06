@@ -10,4 +10,6 @@ urlpatterns = [
     url(r'^reviews/(?P<pk>\d+)/update/$', views.review_update, name='review_update'),
     url(r'^reviews/(?P<pk>\d+)/delete/$', views.review_delete, name='review_delete'),
     url(r'^reviews/search/$',views.search, name='search'),
+    url(r'^advanced/$', views.advanced, name='advanced'),
+    url(r'^visualize/$', views.visualize, name='visualize'),
 ]

@@ -11,7 +11,7 @@
   <form name="search_form" method="POST" action="{% url 'search' %}">
   {% csrf_token %}
   <div class="form-group">
-    <input name="query" type="text" class="form-control" placeholder="Search for..." aria-label="Search for...">
+    <input name="query" type="text" class="form-control" placeholder="Type in Hotel name here" aria-label="Type in Hotel name here">
     <span class="input-group-btn">
       <button class="btn btn-primary" type="Submit">Go!</button>
     </span>
@@ -39,6 +39,8 @@
         <th>Total_Number_of_Reviews_Reviewer_Has_Given</th>
         <th>Reviewer_Score</th>
         <th>Tags</th>
+        <th>Hotel_Name</th>
+<!--        <th>Hotel_Name</th> -->
         <th></th>
       </tr>
     </thead>

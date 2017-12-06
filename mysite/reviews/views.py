@@ -5,6 +5,9 @@ from django.template.loader import render_to_string
 from .models import Review_Entity
 from .models import Hotel_Entity
 from .forms import ReviewForm
+from haversine import haversine
+import requests
+import redis
 
 
 def search(request):
@@ -71,3 +74,55 @@ def review_delete(request, pk):
         context = {'review': review}
         data['html_form'] = render_to_string('reviews/includes/partial_review_delete.html', context, request=request)
     return JsonResponse(data)
+
+
+def advanced(request):
+    # do API query
+    endpoint = "https://maps.googleapis.com/maps/api/geocode/json?address={}&key=AIzaSyDHfW2OgG6ZglRJUzuFHoNZ-L5nmNIO9rI"
+    # addr = request.get
+    # make the request to endpoint
+
+    if request.method == 'POST': # this will be POST now      
+        address = request.POST.get('address') # do some research what it does
+        query = request.POST.get('query') 
+        radius = int(request.POST.get('radius'))
+        address = address.replace(' ', '+')
+        url = endpoint.format(address)
+
+        rds = redis.StrictRedis()
+        words = query.strip().lower().split()
+        hotel_ids = rds.sinter(words)
+
+        matching_hotels = Hotel_Entity.objects.filter(hid__in=hotel_ids)
+
+        r = requests.get(url)
+        lat = r.json()['results'][0]['geometry']['location']['lat']
+        lng = r.json()['results'][0]['geometry']['location']['lng']
+
+        nearby_hotels = list()
+        userloc = (lat, lng)
+        for hotel in matching_hotels:
+            # if hotel geolocation in radius of input latlng, append to nearby hotels
+            #radius = 50
+            distance = haversine(userloc, (hotel.lat, hotel.lng), miles=True)
+            if distance <= radius:
+                print('found {} in {}'.format(distance, radius))
+                nearby_hotels.append(hotel)
+           # print('{}: {},{}'.format(hotel.Hotel_Name, hotel.lat, hotel.lng))
+        
+        return render(request,'reviews/advanced.html',{'hotels': nearby_hotels, 'geolocation':(lat,lng)})
+    else:
+        return render(request, 'reviews/advanced.html', {'hotels': [], 'geolocation':(40.11,-88.23)})
+
+def visualize(request):
+    if request.method == 'POST': # this will be POST now      
+        vis = request.POST.get('visual')
+        return render(request,'reviews/visualize.html',{'visualize': vis})
+    else:
+        return render(request, 'reviews/visualize.html', {'visualize': ''})
+        
+        
+
+
+
+        

@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block javascript %}
+  <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDHfW2OgG6ZglRJUzuFHoNZ-L5nmNIO9rI"></script>
+  <script src="{% static 'reviews/js/reviews.js' %}"></script>
+  
+  <script type="text/javascript">
+    $(document).ready(function () {
+      console.log("hi");
+      var loc = {lat: {{ geolocation.0 }}, lng: {{ geolocation.1 }}};
+      /*console.log({{ hotels }});*/ 
+      console.log(loc);
+      var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 15,
+          center: loc
+      });
+      var marker = new google.maps.Marker({
+          position: loc,
+          map: map
+      });
+
+     var infowindow = new google.maps.InfoWindow();
+
+     function placeMarker( latt, lngg, namee ) {
+      var marker = new google.maps.Marker({
+      position : {lat:  latt, lng: lngg},
+      map      : map
+    });
+     google.maps.event.addListener(marker, 'click', function(){
+        infowindow.close(); // Close previously opened infowindow
+        infowindow.setContent(namee);
+        infowindow.open(map, marker);
+     });
+     } 
+
+      {% for hotel in hotels %}
+        placeMarker( {{ hotel.lat }}, {{ hotel.lng }}, '{{ hotel.Hotel_Name }}' );
+       /* var marker = new google.maps.Marker({
+        position: {lat: {{ hotel.lat }}, lng: {{ hotel.lng }}},
+        map: map  
+      });*/
+      {% endfor %} 
+
+       /* for (i = 0; i < hotels.length; i++){
+            var marker = new google.maps.Marker({
+              position: {lat: hotels[i].lat, lng:  hotels[i].lng },
+              map: map
+            });
+        }*/
+      $("#map").height(400);
+    });
+/*  $(document).ready(function () {
+       var marker = new google.maps.Marker({
+            position: locat,
+            map: map
+    });*/
+  </script>
+{% endblock %}
+
+{% block content %}
+  <h1 class="page-header"> Hotel Search</h1>
+  <form name="search_form" method="POST" action="{% url 'advanced' %}">
+  {% csrf_token %}
+  <div class="form-group">
+    <input name="address" type="text" class="form-control" placeholder="Type in address here" aria-label="Type in address here">
+    <input name="query" type="text" class="form-control" placeholder="Type in words here" aria-label="Type in words here">
+    <input name="radius" type="text" class="form-control" placeholder="Type radius in miles" aria-label="Type radius in miles">
+    <span class="input-group-btn">
+      <button class="btn btn-primary" type="Submit">Search!</button>
+    </span>
+  </div>
+  </form>
+ 
+<!--  <p>
+    {{ geolocation }} <br />
+  </p>
+-->
+  <div id="map">
+  </div>
+
+
+{% endblock %}

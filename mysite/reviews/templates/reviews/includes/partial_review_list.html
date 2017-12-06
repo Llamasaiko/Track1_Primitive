@@ -1,4 +1,4 @@
-{% for review in reviews|slice:":10" %}
+{% for review in reviews|slice:":200" %}
   <tr>
 <!--    <td>{{ review.rid }}</td>
     <td>{{ review.hid }}</td> -->
@@ -11,6 +11,7 @@
     <td>{{ review.Total_Number_of_Reviews_Reviewer_Has_Given }}</td>
     <td>{{ review.Reviewer_Score }}</td>
     <td>{{ review.Tags }}</td>
+    <td>{{ review.gethotelname }}</td>
     <td style="width: 150px">
       <button type="button"
               class="btn btn-warning btn-sm js-update-review"
